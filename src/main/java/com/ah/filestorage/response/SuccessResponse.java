@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class SuccessResponse {
-    private boolean success;
+    protected boolean success;
 }
 
