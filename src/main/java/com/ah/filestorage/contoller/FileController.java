@@ -3,6 +3,7 @@ package com.ah.filestorage.contoller;
 import com.ah.filestorage.entity.File;
 import com.ah.filestorage.exception.BadRequestException;
 import com.ah.filestorage.response.FileIdResponse;
+import com.ah.filestorage.response.FilePagingResponse;
 import com.ah.filestorage.response.SuccessResponse;
 import com.ah.filestorage.service.FileService;
 import lombok.AllArgsConstructor;
@@ -24,34 +25,45 @@ public class FileController {
 
     @PostMapping
     @ResponseBody
-    public FileIdResponse saveFile(@RequestBody  @Valid File file, Errors errors) {
-        if (errors.hasErrors()) {
-            throw new BadRequestException(errors.getFieldErrors().stream().map( DefaultMessageSourceResolvable::getDefaultMessage).collect( Collectors.joining(", ") ));
+    public FileIdResponse saveFile(@RequestBody @Valid File file, Errors errors) {
+        if (errors.hasErrors( )) {
+            throw new BadRequestException( errors.getFieldErrors( ).stream( ).map( DefaultMessageSourceResolvable::getDefaultMessage ).collect( Collectors.joining( ", " ) ) );
         }
-        File savedFile = fileService.save(file);
-        return new FileIdResponse(savedFile.getId());
+        File savedFile = fileService.save( file );
+        return new FileIdResponse( savedFile.getId( ) );
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
     public SuccessResponse deleteFile(@PathVariable String id) {
-        fileService.deleteById(id);
-        return new SuccessResponse(true);
+        fileService.deleteById( id );
+        return new SuccessResponse( true );
     }
 
     @PostMapping("/{id}/tags")
     @ResponseBody
     public SuccessResponse assignTags(@PathVariable String id,
-                                     @RequestBody Set<String> tags) {
-        fileService.addTagsById(id, tags);
-        return new SuccessResponse(true);
+                                      @RequestBody Set<String> tags) {
+        fileService.addTagsById( id, tags );
+        return new SuccessResponse( true );
     }
 
     @DeleteMapping("/{id}/tags")
     @ResponseBody
     public SuccessResponse removeTags(@PathVariable String id,
-                                     @RequestBody Set<String> tags) {
-        fileService.removeTagsById(id, tags);
-        return new SuccessResponse(true);
+                                      @RequestBody Set<String> tags) {
+        fileService.removeTagsById( id, tags );
+        return new SuccessResponse( true );
+    }
+
+    @GetMapping
+    @ResponseBody
+    public FilePagingResponse listFilesWithPagination(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(required = false) String tags,
+            @RequestParam(required = false, defaultValue = "") String q) {
+
+        return fileService.filesWithPagination( page, size, q, tags );
     }
 }
