@@ -25,9 +25,12 @@ public class FileController {
 
     @PostMapping
     @ResponseBody
-    public FileIdResponse saveFile(@RequestBody @Valid File file, Errors errors) {
+    public FileIdResponse saveFile(@RequestBody @Valid File file,
+                                   Errors errors) {
         if (errors.hasErrors( )) {
-            throw new BadRequestException( errors.getFieldErrors( ).stream( )
+            throw new BadRequestException( errors
+                    .getFieldErrors( )
+                    .stream( )
                     .map( DefaultMessageSourceResolvable::getDefaultMessage )
                     .collect( Collectors.joining( ", " ) ) );
         }

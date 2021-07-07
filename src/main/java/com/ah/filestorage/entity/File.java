@@ -27,7 +27,8 @@ public class File {
     @Field(type = FieldType.Text)
     private String name;
 
-    @PositiveOrZero(message = "Size of file must be greater than or equal 0")
+    @PositiveOrZero(message = "Size of file must be"
+            + "greater than or equal 0")
     @NotNull(message = "There must be a size of a file")
     @Field(type = FieldType.Long)
     private Long size;
