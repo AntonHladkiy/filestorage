@@ -10,6 +10,6 @@ import java.util.Set;
 public interface FileRepository extends ElasticsearchRepository<File, String> {
     Page<File> findAllByNameContains(String namePart, Pageable pageable);
 
-    Page<File> findAllByNameContainsAndTags(String namePart,Set<String> tag , Pageable pageable);
+    Page<File> findAllByNameContainsAndTags(String namePart, Set<String> tag, Pageable pageable);
 
 }

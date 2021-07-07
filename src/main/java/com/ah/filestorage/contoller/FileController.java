@@ -27,7 +27,9 @@ public class FileController {
     @ResponseBody
     public FileIdResponse saveFile(@RequestBody @Valid File file, Errors errors) {
         if (errors.hasErrors( )) {
-            throw new BadRequestException( errors.getFieldErrors( ).stream( ).map( DefaultMessageSourceResolvable::getDefaultMessage ).collect( Collectors.joining( ", " ) ) );
+            throw new BadRequestException( errors.getFieldErrors( ).stream( )
+                    .map( DefaultMessageSourceResolvable::getDefaultMessage )
+                    .collect( Collectors.joining( ", " ) ) );
         }
         File savedFile = fileService.save( file );
         return new FileIdResponse( savedFile.getId( ) );

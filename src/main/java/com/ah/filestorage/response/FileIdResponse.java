@@ -10,5 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FileIdResponse {
     @JsonProperty("ID")
-    String id;
+    private String id;
 }

@@ -1,5 +1,6 @@
 package com.ah.filestorage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -8,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 public class File {
 
     @Id
+    @JsonIgnore
     private String id;
 
     @NotEmpty(message = "Name cannot be empty")
@@ -25,7 +27,7 @@ public class File {
     @Field(type = FieldType.Text)
     private String name;
 
-    @Positive(message = "Size of file must be greater than 0")
+    @PositiveOrZero(message = "Size of file must be greater than or equal 0")
     @NotNull(message = "There must be a size of a file")
     @Field(type = FieldType.Long)
     private Long size;
@@ -36,7 +38,7 @@ public class File {
     public File(String name, Long size) {
         this.name = name;
         this.size = size;
-        tags = new HashSet<>();
+        tags = new HashSet<>( );
     }
 
 }

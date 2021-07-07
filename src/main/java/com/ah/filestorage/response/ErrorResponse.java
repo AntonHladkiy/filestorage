@@ -11,7 +11,7 @@ public class ErrorResponse extends SuccessResponse {
     private String errorMessage;
 
     public ErrorResponse(String message) {
-        super(false);
+        super( false );
         this.errorMessage = message;
     }
 }
